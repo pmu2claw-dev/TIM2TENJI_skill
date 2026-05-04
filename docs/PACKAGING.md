@@ -4,26 +4,28 @@
 
 `TIM2TENJI_skill` 是一個可安裝的 Python package，目標是在他人電腦上重現「TENJI Excel 轉換」流程。
 
-- **Core Engine（已實作 MVP）**
+- **Core Engine（已實作）**
   - request/spec ingestion
-  - spec validator
+  - normalize + validator + memory rules
+  - auto repair（可選）
+  - gates（hard/soft + fidelity + lineage）
   - excel writer（含 append）
-  - visual verify（LibreOffice PDF）
-- **Knowledge/Gate（目前為骨架）**
-  - 規則檔與驗證點可持續擴充
-  - 後續可接 Hermes lineage/golden answer gate
+  - visual verify（LibreOffice PDF，可選）
 
 ## 2) 打包內容
 
 - `pyproject.toml`：套件建置與依賴設定
 - `tenji_converter/cli.py`：命令列介面 (`tenji-convert`)
-- `tenji_converter/core/compiler.py`：轉換協調器（parse/validate/write/verify）
-- `tenji_converter/core/validator.py`：規則驗證器
+- `tenji_converter/core/compiler.py`：轉換協調器
+- `tenji_converter/core/normalizer.py`：規格正規化
+- `tenji_converter/core/validator.py`：核心驗證
+- `tenji_converter/core/memory_loader.py`：memory 載入與相關性選取
+- `tenji_converter/core/memory_rules.py`：memory-driven domain 規則
+- `tenji_converter/core/repair.py`：自動修補策略
+- `tenji_converter/core/gates.py`：Hermes gate/fidelity/lineage
 - `tenji_converter/core/excel_writer.py`：Excel 生成/追加
 - `tenji_converter/core/visual_verify.py`：PDF 視覺檢查
-- `README.md`：專案簡介
-- `docs/USAGE.md`：詳細使用說明
-- `CHANGELOG.md`：版本紀錄
+- `README.md`、`docs/USAGE.md`、`CHANGELOG.md`
 
 ## 3) 安裝型態
 
@@ -47,17 +49,20 @@ python -m build
 - 若要啟用 `--verify-visual`：安裝 LibreOffice 並確保 `soffice` 可用
 - 建議用 virtualenv/venv 隔離依賴
 
-## 5) 品質閘（MVP）
+## 5) 品質閘（v0.2）
 
-- 結構合法性（top-level keys、action、items）
+- normalize（`items`/`test_items` 對齊）
+- 結構合法性（action/symbol/commands）
 - command-level 檢查（wait/hex/tmu）
+- memory rules（protocol/OS/UR/QC-HVDCP 等）
+- gates（hard failures + soft warnings + fidelity score + lineage）
 - 輸出 sidecar artifacts：
   - normalized spec JSON
-  - summary JSON（errors/warnings/output/visual status）
+  - summary JSON
 
 ## 6) 後續擴充方向
 
-1. 接軌 OpenClaw 現有 normalize/validate 邏輯
-2. 導入 Hermes skill memory rules 作 hard gate
-3. 新增 lineage 紀錄（request -> spec -> workbook hash）
-4. 加入 fail->repair 重試策略與 golden workbook 比對
+1. 導入更完整 Hermes golden answer gate
+2. 強化 lineage（request -> spec -> workbook hash）
+3. 擴充 fail->repair 策略與規則覆蓋率
+4. 提供 API server + Docker runtime

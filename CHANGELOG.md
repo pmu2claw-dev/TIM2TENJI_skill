@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2026-05-04
+
+### Added
+- 新增 OpenClaw 對齊模組：
+  - `normalizer.py`
+  - `memory_loader.py`
+  - `memory_rules.py`
+  - `repair.py`
+- 新增 Hermes gate 模組：
+  - `gates.py`（hard/soft gate、fidelity score、lineage）
+- CLI 新增參數：
+  - `--memory-root`
+  - `--auto-repair`
+  - `--gate-strict`
+
+### Changed
+- `compiler.py` 升級流程：
+  - normalize -> validate(+memory) -> auto-repair(可選) -> gates -> excel -> visual verify
+- `validator.py` 升級為整合 normalize 與 memory rules 的驗證入口
+- `summary.json` 擴充：memory context、memory rules、gates、fidelity、lineage
+- 文件更新：README / USAGE / PACKAGING
+
 ## [0.1.0] - 2026-05-04
 
 ### Added
@@ -17,7 +39,3 @@ All notable changes to this project will be documented in this file.
   - `docs/PACKAGING.md`
   - `docs/USAGE.md`
   - `CHANGELOG.md`
-
-### Notes
-- v0.1.0 聚焦可安裝、可執行、可追蹤的 MVP。
-- Hermes lineage/golden hard gate 將於後續版本逐步導入。

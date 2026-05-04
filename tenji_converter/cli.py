@@ -17,6 +17,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--output", type=Path, required=True, help="Output .xlsx/.xlsm path")
     parser.add_argument("--existing-excel", type=Path, help="Existing workbook path for append mode")
     parser.add_argument("--template", type=Path, help="Template workbook path")
+    parser.add_argument("--memory-root", type=Path, help="Durable memory root path")
+    parser.add_argument("--auto-repair", action="store_true", help="Auto repair spec when validation fails")
+    parser.add_argument("--gate-strict", action="store_true", help="Enable strict Hermes gate mode")
     parser.add_argument("--normalized-spec-output", type=Path, default=Path("normalized_spec.json"))
     parser.add_argument("--summary-output", type=Path, default=Path("summary.json"))
     parser.add_argument("--verify-visual", action="store_true", help="Run LibreOffice-based PDF verification")
@@ -35,6 +38,9 @@ def main() -> int:
         existing_excel=args.existing_excel,
         template=args.template,
         verify_visual=args.verify_visual,
+        memory_root=args.memory_root,
+        auto_repair=args.auto_repair,
+        gate_strict=args.gate_strict,
     )
 
     args.normalized_spec_output.write_text(result.normalized_spec_json, encoding="utf-8")
