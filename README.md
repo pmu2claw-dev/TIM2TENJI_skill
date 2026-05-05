@@ -49,6 +49,8 @@ pip install -U pip
 pip install -e .
 ```
 
+> 發佈狀態註記（2026-05-05）：目前已確認 **source install ready**（可 `pip install -e .`），但 **wheel/sdist artifact 尚未進行正式 build 驗證**（刻意略過以避免流程卡住）。
+
 ## 快速使用
 
 ```bash

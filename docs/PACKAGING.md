@@ -43,6 +43,8 @@ python -m build
 # 產出 dist/*.whl
 ```
 
+> 目前發佈策略：先以 **source install ready** 為主（`pip install -e .` 可用）；`python -m build` 的 wheel/sdist artifact **尚未做正式驗證**，以避免流程卡住。
+
 ## 4) 跨機部署建議
 
 - 目標機需 Python 3.10+

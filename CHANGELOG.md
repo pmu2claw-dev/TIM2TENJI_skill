@@ -23,6 +23,7 @@ All notable changes to this project will be documented in this file.
 - `validator.py` 升級為整合 normalize 與 memory rules 的驗證入口
 - `summary.json` 擴充：memory context、memory rules、gates、fidelity、lineage
 - 文件更新：README / USAGE / PACKAGING
+- 發佈狀態：source install ready；wheel/sdist artifact build 驗證暫未執行（避免驗證流程阻塞）
 
 ## [0.1.0] - 2026-05-04
 
